@@ -53,4 +53,19 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+  
+  root to: 'application#angular'
+
+  resources :posts, only: [:create, :index, :show] do
+    resources :comments, only: [:show, :create] do
+      member do
+        put '/upvote' => 'comments#upvote'
+      end
+    end
+
+    member do
+      put '/upvote' => 'posts#upvote'
+    end
+  end
+  
 end
